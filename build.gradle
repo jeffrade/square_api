@@ -3,22 +3,40 @@
  *
  * This is a general purpose Gradle build.
  * Learn how to create Gradle builds at https://guides.gradle.org/creating-new-gradle-builds/
+ *
+ * Using Spring Boot Rest Service https://spring.io/guides/gs/rest-service/
  */
 
 apply plugin: 'java'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
 
-repositories {
-    jcenter()
-}
-
-jar {
-    manifest {
-        attributes('Main-Class': 'com.github.jeffrade.square.api.App')
+buildscript {
+    repositories {
+        mavenCentral()
+        jcenter()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:2.0.6.RELEASE")
     }
 }
 
+bootJar {
+    baseName = 'square-api'
+    version =  '0.1.0'
+}
+
+repositories {
+    mavenCentral()
+}
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
 dependencies {
     compile 'org.slf4j:slf4j-api:1.7.25'
+    compile 'org.springframework.boot:spring-boot-starter-web'
 
     testCompile 'junit:junit:4.12'
+    testCompile 'org.springframework.boot:spring-boot-starter-test'
 }
