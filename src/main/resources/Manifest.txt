@@ -1,2 +1,0 @@
-Main-Class: com.github.jeffrade.square.api.App
-
