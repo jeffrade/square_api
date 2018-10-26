@@ -1,7 +1,9 @@
 package com.github.jeffrade.square.api.model;
 
-import java.util.Collections;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 /**
@@ -9,13 +11,11 @@ import java.util.Objects;
  */
 public class JsonApiResponse {
 
-    private static final List<String> EMPTY_LIST = Collections.emptyList();
-
     private static final String EMPTY_STRING = "";
 
     private int status;
 
-    private List<String> data;
+    private List<Map<String, String>> data;
 
     private List<String> errors;
 
@@ -34,10 +34,40 @@ public class JsonApiResponse {
     }
 
     public JsonApiResponse(int status) {
-        this(status, EMPTY_LIST, EMPTY_LIST, EMPTY_STRING, null, null, null, null);
+        this(new ArrayList<Map<String, String>>(), new ArrayList<String>(), EMPTY_STRING, null, null, null, null);
+        this.status = status;
     }
 
-    public JsonApiResponse(int status, List<String> data, List<String> errors, String meta,
+    public JsonApiResponse(int status, Map<String, String> message) {
+        this(new ArrayList<String>(), EMPTY_STRING, null, null, null, null);
+        this.status = status;
+        this.addData(message);
+    }
+
+    public JsonApiResponse(List<String> errors, String meta, List<String> links,
+            List<String> included, String self, String related) {
+        super();
+        this.errors = errors;
+        this.meta = meta;
+        this.links = links;
+        this.included = included;
+        this.self = self;
+        this.related = related;
+    }
+
+    public JsonApiResponse(List<Map<String, String>> data, List<String> errors, String meta,
+            List<String> links, List<String> included, String self, String related) {
+        super();
+        this.data = data;
+        this.errors = errors;
+        this.meta = meta;
+        this.links = links;
+        this.included = included;
+        this.self = self;
+        this.related = related;
+    }
+
+    public JsonApiResponse(int status, List<Map<String, String>> data, List<String> errors, String meta,
             List<String> links, List<String> included, String self, String related) {
         super();
         this.status = status;
@@ -50,6 +80,25 @@ public class JsonApiResponse {
         this.related = related;
     }
 
+    public JsonApiResponse addData(Map<String, String> messages) {
+        if(data == null) {
+            data = new ArrayList<>();
+        }
+        data.add(messages);
+        return this;
+    }
+
+    public JsonApiResponse addData(String key, String value) {
+        if(data == null) {
+            data = new ArrayList<>();
+        }
+        Map<String, String> m = new HashMap<>();
+        String safeValue = value == null ? "NULL" : value;
+        m.put(key, value);
+        data.add(m);
+        return this;
+    }
+
     public int getStatus() {
         return status;
     }
@@ -58,11 +107,11 @@ public class JsonApiResponse {
         this.status = status;
     }
 
-    public List<String> getData() {
+    public List<Map<String, String>> getData() {
         return data;
     }
 
-    public void setData(List<String> data) {
+    public void setData(List<Map<String, String>> data) {
         this.data = data;
     }
 
