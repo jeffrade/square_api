@@ -34,8 +34,11 @@ sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
 dependencies {
+    compileOnly 'org.projectlombok:lombok:1.18.2'
+    
     compile 'org.slf4j:slf4j-api:1.7.25'
     compile 'org.springframework.boot:spring-boot-starter-web'
+    compile 'com.squareup:connect:2.20180918.1'
 
     testCompile 'junit:junit:4.12'
     testCompile 'org.springframework.boot:spring-boot-starter-test'
