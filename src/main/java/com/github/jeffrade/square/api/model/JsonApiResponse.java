@@ -38,6 +38,12 @@ public class JsonApiResponse {
         this.status = status;
     }
 
+    public JsonApiResponse(int status, String message) {
+        this(new ArrayList<String>(), EMPTY_STRING, null, null, null, null);
+        this.status = status;
+        this.addData(message);
+    }
+
     public JsonApiResponse(int status, Map<String, String> message) {
         this(new ArrayList<String>(), EMPTY_STRING, null, null, null, null);
         this.status = status;
@@ -89,14 +95,14 @@ public class JsonApiResponse {
     }
 
     public JsonApiResponse addData(String key, String value) {
-        if(data == null) {
-            data = new ArrayList<>();
-        }
         Map<String, String> m = new HashMap<>();
         String safeValue = value == null ? "NULL" : value;
         m.put(key, value);
-        data.add(m);
-        return this;
+        return addData(m);
+    }
+
+    public JsonApiResponse addData(String value) {
+        return addData("message", value);
     }
 
     public int getStatus() {
