@@ -1,0 +1,7 @@
+square:
+  app:
+    name: ${SQUAREUP_APP_NAME}
+  api:
+    applicationId: ${SQUAREUP_API_APP_ID}
+    acceptToken: ${SQUAREUP_API_ACC_TOKEN}
+    applicationSecret: ${SQUAREUP_API_APP_SECRET}
