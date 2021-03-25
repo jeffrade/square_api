@@ -32,6 +32,7 @@ fn main() {
             authorzie_request_url
         );
         listen(server);
+        println!("Goodbye!");
     } else {
         println!("You must pass a valid command!");
     }
@@ -51,6 +52,7 @@ fn listen(server: Server) {
                         "User successfully authorized, authorization code is {:?}",
                         &code
                     );
+                    server.unblock(); // shutdown server
                 }
             }
         } else {
